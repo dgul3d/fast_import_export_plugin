@@ -1,0 +1,96 @@
+{
+  "fbx": {
+    "export": {
+      "builtin": {
+        "default": {
+          "name": "FBX Builtin Default",
+          "description": "Pre-rotated to Unity",
+          "values": {
+            "use_selection": true,
+            "axis_forward": "-X",
+            "axis_up": "Z",
+            "add_leaf_bones": false,
+            "apply_scale_options": "FBX_SCALE_ALL",
+            "colors_type": "LINEAR"
+          }
+        }
+      },
+      "builtin_embedded": {
+        "default": {
+          "name": "FBX Builtin Embedded",
+          "description": "Mostly for Mixamo",
+          "values": {
+            "use_selection": true,
+            "axis_forward": "-X",
+            "axis_up": "Z",
+            "add_leaf_bones": false,
+            "apply_scale_options": "FBX_SCALE_ALL",
+            "path_mode": "AUTO", 
+            "embed_textures": true
+          }
+        }
+      },
+      "builtin_no_anim": {
+         "default": {
+          "name": "FBX Builtin No Anim",
+          "description": "Pre-rotated to Unity without animations",
+          "values": {
+            "use_selection": true,
+            "axis_forward": "-X",
+            "axis_up": "Z",
+            "add_leaf_bones": false,
+            "apply_scale_options": "FBX_SCALE_ALL",
+            "bake_anim" : false
+          }
+        }
+      },
+      "betterfbx": {
+        "default": {
+          "name": "FBX Better Fbx Default",
+          "description": "Better Fbx to Unity",
+          "values": {
+            "use_selection": true,
+            "my_fbx_unit": "m",
+            "use_reset_mesh_origin": false,
+            "use_reset_mesh_rotation": false
+          }
+        },
+        "ascii": {
+          "name": "FBX Better Fbx ASCII",
+          "description": "Better Fbx ACSII to Unity",
+          "values": {
+            "use_selection": true,
+            "my_fbx_format": "ascii",
+            "my_fbx_unit": "m",
+            "use_reset_mesh_origin": false,
+            "use_reset_mesh_rotation": false
+          }
+        }
+      }
+    },
+    "import": {
+      "builtin": {
+        "default": {
+          "name": "FBX Default import",
+          "description": "Default import settings",
+          "values": {
+            "automatic_bone_orientation": true,
+            "colors_type": "LINEAR"
+          }
+        }
+      },
+      "betterfbx": {
+        "default": {
+          "name": "FBX Better FBX import",
+          "description": "Better fbx import",
+          "values": {
+            "my_rotation_mode": "XYZ",
+            "my_fbx_unit": "m",
+            "use_reset_mesh_origin": false,
+            "use_reset_mesh_rotation": false
+          }
+        }
+      }
+    }
+  }
+}
