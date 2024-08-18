@@ -166,3 +166,6 @@ ipython_config.py
 
 # Executables
 blender_to_os.bat
+
+# Vscode
+.vscode/

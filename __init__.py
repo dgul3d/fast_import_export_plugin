@@ -18,10 +18,12 @@ if "bpy" in locals():
     importlib.reload(generator)
     importlib.reload(properties)
     importlib.reload(ui)
+    importlib.reload(preset_manager)
 else:
     from . import generator
     from . import properties
     from . import ui
+    from . import preset_manager
 
 import bpy
 import os

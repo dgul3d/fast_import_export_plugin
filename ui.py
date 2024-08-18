@@ -15,7 +15,6 @@ class FASTIO_OT_button(bpy.types.Operator):
         result = (context.selected_objects != []) and scene_property_exists("export_path") and scene_property_exists("export_preset")
         return result
     
-    #TODO Add check if export_preset and export_path are set. Change bl_description depending on a case
     @classmethod
     def description(cls, context, properties):
         if (context.selected_objects == []):
