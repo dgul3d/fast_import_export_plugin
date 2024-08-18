@@ -1,6 +1,6 @@
 import bpy
-from .importer import get_preset_values
-from .importer import get_preset_tree
+from .preset_manager import get_preset_items
+from .preset_manager import get_preset_tree
 
 class FASTIO_OT_button(bpy.types.Operator):
     bl_idname = "export.button"
@@ -27,23 +27,19 @@ class FASTIO_OT_button(bpy.types.Operator):
             return f"Export selected using preset {bpy.data.scenes['Scene']['export_preset']}"
 
     def execute(self, context):
-        export_path = ""
         try:
-            export_settings = get_preset_values(bpy.data.scenes['Scene']["export_preset"])
+            export_preset_name = bpy.data.scenes['Scene']["export_preset"]
         except AttributeError:
             return "Preset not found"
         try:
             export_path = bpy.data.scenes['Scene']['export_path']
         except KeyError:
-            bpy.ops.export_scene.fbx('INVOKE_DEFAULT', **export_settings)
+            pass
         else:
-            if bpy.data.scenes['Scene']["export_preset"].split("_")[0] == "fbx":
-                if bpy.data.scenes['Scene']["export_preset"].split("_")[2] == "builtin":
-                    bpy.ops.export_scene.fbx(filepath = export_path, **export_settings)
-                elif bpy.data.scenes['Scene']["export_preset"].split("_")[2] == "betterfbx":
-                    bpy.ops.better_export.fbx(filepath = export_path, **export_settings)
-                else:
-                    return "Preset not found"
+            preset_operator = get_preset_tree()[export_preset_name]["preset_operator"]
+            arguments = get_preset_tree()[export_preset_name]["kwargs"]
+            arguments["filepath"] = export_path
+            eval(f"{preset_operator}(**{arguments})")
         return {"FINISHED"}
 
 class FASTIO_OT_settings(bpy.types.Operator):
@@ -51,7 +47,7 @@ class FASTIO_OT_settings(bpy.types.Operator):
     bl_label = "Export"
     bl_description = "Select an Export Preset"
     bl_options = {"REGISTER", "UNDO"}
-    preset_items = get_preset_tree("export")
+    preset_items = get_preset_items()
 
     preset_name: bpy.props.EnumProperty(
         items=preset_items,

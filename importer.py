@@ -68,7 +68,7 @@ def import_file():
             print("Extension %r is not known!" % ext)
         create_export_path_property()
         bpy.data.scenes['Scene']["export_path"] = str(argv[0])
-        bpy.data.scenes['Scene']["export_preset"] = "fbx_export_builtin_default" 
+        bpy.data.scenes['Scene']["export_preset"] = "Fbx: FBX_Default" 
     if not argv:
         print("No files passed")
 
