@@ -20,9 +20,9 @@ class FASTIO_OT_button(bpy.types.Operator):
     def description(cls, context, properties):
         if (context.selected_objects == []):
             return "Select objects for export"
-        elif not scene_property_exists("export_preset"):
+        elif scene_property_exists("export_preset") is False:
             return "Select a preset"
-        elif not scene_property_exists("export_path"):
+        elif scene_property_exists("export_path") is False:
             return "Choose an export path"
         else:
             return f"Export selected using preset {bpy.data.scenes['Scene']['export_preset']}"
@@ -67,14 +67,36 @@ class FASTIO_OT_settings(bpy.types.Operator):
     def invoke(self, context, event):
         return context.window_manager.invoke_props_popup(self, event)
 
+class FASTIO_OT_export_path(bpy.types.Operator):
+    bl_idname = "export.export_path"
+    bl_label = "Set Export Path"
+    bl_description = "Open a file browser to set the export path"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        bpy.data.scenes['Scene']['export_path'] = self.filepath
+        return {'FINISHED'}
+
+    def invoke(self, context, event):
+        if scene_property_exists('export_path'):
+            self.filepath = bpy.data.scenes['Scene']['export_path']
+        context.window_manager.fileselect_add(self)
+        return {'RUNNING_MODAL'}
+    
+    filepath: bpy.props.StringProperty(subtype="DIR_PATH")
+
 def draw(self, context):
     layout = self.layout
     row = layout.row(align=True)
     row.operator(FASTIO_OT_button.bl_idname, icon = "EXPORT")
     row.operator(FASTIO_OT_settings.bl_idname, text = "" , icon = "PREFERENCES")
+    row.operator(FASTIO_OT_export_path.bl_idname, text = "" , icon = "FILE_FOLDER")
 
-def scene_property_exists(preset_name: str):
-    return bpy.data.scenes['Scene'].get(preset_name) is not None
+def scene_property_exists(property_name: str):
+    if property_name in bpy.data.scenes['Scene'] and (bpy.data.scenes['Scene'].get(property_name) is not None):
+        return True
+    else:
+        return False 
 
 def draw_button():
     bpy.types.VIEW3D_HT_tool_header.prepend(draw)
