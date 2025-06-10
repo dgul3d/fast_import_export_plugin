@@ -1,7 +1,7 @@
 # Fast import export plugin
 Import fbx file in Blender by clicking on it, edit it, and save it in one click. Designed for Unity-Blender-Unity workflow.
 
-![fast_import_export_usage](https://github.com/dguliev-github/fast_import_export_plugin/assets/64034875/c59b2556-4cd6-4bc0-9fc4-36c181a58518)
+![fast_import_export_usage](https://github.com/dgul3d/fast_import_export_plugin/assets/64034875/c59b2556-4cd6-4bc0-9fc4-36c181a58518)
 
 ### Installation
 
@@ -17,7 +17,7 @@ Import fbx file in Blender by clicking on it, edit it, and save it in one click.
 This addon is designed for fast fbx file modification and benefits multiple software workflows, such as `Blender to Unity`.
 
 You can open fbx files from the windows explorer, Unity Project window, Unity inspector (by double clicking on a mesh field).
-![ways_to_open_fbx](https://github.com/dguliev-github/fast_import_export_plugin/assets/64034875/34b6a55c-314d-4ab6-8e53-b41af8759e33)
+![ways_to_open_fbx](https://github.com/dgul3d/fast_import_export_plugin/assets/64034875/34b6a55c-314d-4ab6-8e53-b41af8759e33)
 
 Edit imported objects, select those which you want to export, and click `export` button at the top left corner of the 3D view. The new fbx file containing selected objects will overwrite the old one.
 
@@ -33,14 +33,14 @@ Mac and Linux support are not implemented yet. There are some mac integration sn
 
 ### Default settings
 #### Import
-![image](https://github.com/dguliev-github/fast_import_export_plugin/assets/64034875/6f949ef5-ab08-422a-9014-d2f405361847)
+![image](https://github.com/dgul3d/fast_import_export_plugin/assets/64034875/6f949ef5-ab08-422a-9014-d2f405361847)
 
 The same as default blender with only one change:
 
 - [x] Automatic Bone Orientation
 
 #### Export
-![image](https://github.com/dguliev-github/fast_import_export_plugin/assets/64034875/febfef1d-96a8-4665-9f15-4841f56de067)
+![image](https://github.com/dgul3d/fast_import_export_plugin/assets/64034875/febfef1d-96a8-4665-9f15-4841f56de067)
 
 The same as default blender but with changes:
 - [x] Limit to Selected Objects
@@ -56,7 +56,7 @@ On `Export` button click mesh file is being exported at `export_path` which basi
 
 It is possible (and encouraged) for user to change `export_path` by directly changing file path in `Scene > Custom Properties` if they want to keep the original file intact and just make a copy at another location or with the different name.
 
-![image](https://github.com/dguliev-github/fast_import_export_plugin/assets/64034875/6a03f4e6-0b2b-4778-bb7c-ee8a9a79f987)
+![image](https://github.com/dgul3d/fast_import_export_plugin/assets/64034875/6a03f4e6-0b2b-4778-bb7c-ee8a9a79f987)
 
 Every opened fbx file invokes separate blender instance. This is intentional behavior and is meant to work using edit-and-forget methodology. If user is done with editing and exports new fbx file version they can close blender without saving .blend file. If there is a need to change this file again, user can reimport that file by simply opening it in blender.
 
