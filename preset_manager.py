@@ -66,6 +66,6 @@ def get_preset_items(is_export=True):
     return preset_items
 
 if __name__ == "__main__":
-    export_preset = "Fbx: FBX_Default"
+    #export_preset = "Fbx: FBX_Default"
     #print(get_preset_tree(is_export=False))
     print(get_preset_tree(True))

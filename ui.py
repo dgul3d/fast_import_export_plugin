@@ -2,6 +2,9 @@ import bpy
 from .preset_manager import get_preset_items
 from .preset_manager import get_preset_tree
 
+def update_preset_items(self, context):
+    return get_preset_items()
+
 class FASTIO_OT_button(bpy.types.Operator):
     bl_idname = "export.button"
     bl_label = "Export"
@@ -20,7 +23,7 @@ class FASTIO_OT_button(bpy.types.Operator):
         if (context.selected_objects == []):
             return "Select objects for export"
         elif scene_property_exists("export_preset") is False:
-            return "Select a preset"
+            return "Create the fbx export preset"
         elif scene_property_exists("export_path") is False:
             return "Choose an export path"
         else:
@@ -30,16 +33,29 @@ class FASTIO_OT_button(bpy.types.Operator):
         try:
             export_preset_name = bpy.data.scenes['Scene']["export_preset"]
         except AttributeError:
-            return "Preset not found"
+            self.report({'ERROR'}, "Preset not found or invalid.") 
+            return {'CANCELLED'}
         try:
             export_path = bpy.data.scenes['Scene']['export_path']
         except KeyError:
-            pass
+            self.report({'ERROR'}, "Export path not set.") 
+            return {'CANCELLED'}
         else:
-            preset_operator = get_preset_tree()[export_preset_name]["preset_operator"]
-            arguments = get_preset_tree()[export_preset_name]["kwargs"]
+            preset_tree = get_preset_tree()
+            if export_preset_name not in preset_tree:
+                self.report({'ERROR'}, f"Selected preset '{export_preset_name}' not found. Please select a valid preset.")
+                return {'CANCELLED'}
+
+            preset_operator = preset_tree[export_preset_name]["preset_operator"]
+            arguments = preset_tree[export_preset_name]["kwargs"]
             arguments["filepath"] = export_path
-            eval(f"{preset_operator}(**{arguments})")
+            
+            try:
+                eval(f"bpy.ops.{preset_operator.split('.')[-2]}.{preset_operator.split('.')[-1]}(**{arguments})")
+            except Exception as e:
+                self.report({'ERROR'}, f"Export failed: {e}")
+                return {'CANCELLED'}
+
         return {"FINISHED"}
 
 class FASTIO_OT_settings(bpy.types.Operator):
@@ -47,10 +63,8 @@ class FASTIO_OT_settings(bpy.types.Operator):
     bl_label = "Export"
     bl_description = "Select an Export Preset"
     bl_options = {"REGISTER", "UNDO"}
-    preset_items = get_preset_items()
-
     preset_name: bpy.props.EnumProperty(
-        items=preset_items,
+        items=update_preset_items,
         name="Export Preset",
         description="Select an export preset",
     )
@@ -60,6 +74,9 @@ class FASTIO_OT_settings(bpy.types.Operator):
         return {"FINISHED"}
 
     def invoke(self, context, event):
+        if not get_preset_items(): 
+            self.report({'INFO'}, "No export presets found. Please save an export preset in Blender first (File > Export > FBX > Operator Presets > New).")
+            return {'CANCELLED'}
         return context.window_manager.invoke_props_popup(self, event)
 
 class FASTIO_OT_export_path(bpy.types.Operator):

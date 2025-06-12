@@ -1,6 +1,13 @@
 import os
 import bpy
 import json
+import sys
+
+addon_dir = os.path.dirname(os.path.abspath(__file__))
+if addon_dir not in sys.path:
+    sys.path.append(addon_dir)
+
+import preset_manager
 
 filename = "presets.json"
 
@@ -68,7 +75,24 @@ def import_file():
             print("Extension %r is not known!" % ext)
         create_export_path_property()
         bpy.data.scenes['Scene']["export_path"] = str(argv[0])
-        bpy.data.scenes['Scene']["export_preset"] = "Fbx: FBX_Default" 
+
+        # Get the default export preset from addon preferences
+        # Use the actual addon name "fast_export_import" instead of __package__
+        addon_prefs = bpy.context.preferences.addons["fast_export_import"].preferences
+        default_export_preset_name = addon_prefs.default_export_preset
+
+        if default_export_preset_name: # Check if a default preset is selected
+            bpy.data.scenes['Scene']["export_preset"] = default_export_preset_name
+        else:
+            # Fallback to the first FBX preset if no default is set in preferences
+            fbx_export_presets = preset_manager.get_operator_presets(preset_type='export_scene.fbx')
+            if fbx_export_presets:
+                first_fbx_preset_name = fbx_export_presets[0]["preset_name"]
+                bpy.data.scenes['Scene']["export_preset"] = f"Fbx: {first_fbx_preset_name}"
+            else:
+                print("No FBX export presets found and no default set in preferences.")
+
+
     if not argv:
         print("No files passed")
 

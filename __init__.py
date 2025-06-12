@@ -32,7 +32,7 @@ addon_dir = os.path.dirname(os.path.abspath(__file__))
 
 generator.generate_executable_bat(os.path.split(bpy.app.binary_path)[0], bpy.app.binary_path, addon_dir, "blender_to_os.bat")
 
-classes = (ui.FASTIO_OT_button,ui.FASTIO_OT_settings,ui.FASTIO_OT_export_path,properties.AddFolderPreferences,properties.OpenFolderOperator)
+classes = (ui.FASTIO_OT_button, ui.FASTIO_OT_settings, ui.FASTIO_OT_export_path, properties.AddFolderPreferences, properties.OpenFolderOperator)
 
 def register():
     for cls in classes:
