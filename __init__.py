@@ -5,12 +5,12 @@
 bl_info = {
     "name": "Fast Import Export",
     "author": "Damir Guliev, Robert Guetzkow, Campbell Barton (ideasman42)",
-    "version": (0, 0, 3),
+    "version": (1, 0, 0),
     "blender": (3, 0, 0),
     "location": "3D View",
     "description": "Adds an export button to the 3D menu header.",
-    "wiki_url": "",
-    "warning": "Some variables are still hardcoded!",
+    "doc_url": "https://github.com/dgul3d/fast_import_export_plugin",
+    "tracker_url": "https://github.com/dgul3d/fast_import_export_plugin/issues",
     "category": "Import-Export"}
 
 if "bpy" in locals():
