@@ -33,7 +33,7 @@ def import_file():
                 'files': [{'name': os.path.basename(f), 'path': f}]
             }
 
-            addon_prefs = bpy.context.preferences.addons["fast_export_import"].preferences
+            addon_prefs = bpy.context.preferences.addons[os.path.basename(os.path.dirname(__file__))].preferences
             default_import_preset_name = addon_prefs.default_import_preset
             import_preset_tree = preset_manager.get_preset_tree(is_export=False)
 
